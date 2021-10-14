@@ -1,0 +1,32 @@
+#!/bin/bash
+
+# Setup environment
+BASEPATH=$PWD
+TOOLSPATH=$BASEPATH/.tools
+WORKSPACE=$BASEPATH/workspace
+
+mkdir -p $TOOLSPATH
+
+# Install Go
+VERSION=1.17.2
+OS=linux
+ARCH=amd64
+ARCHIVE=go$VERSION.$OS-$ARCH.tar.gz
+wget --quiet https://dl.google.com/go/$ARCHIVE
+tar -C $TOOLSPATH -xzf $ARCHIVE
+rm $ARCHIVE
+
+export PATH=$TOOLSPATH/go/bin:$PATH
+export GOBIN=$(go env GOPATH)/bin
+export PATH=$GOBIN:$PATH
+
+ENVVARSFILE=.bashrc
+echo "export PATH=$GOBIN:$TOOLSPATH/go/bin:$PATH" >> $ENVVARSFILE
+
+# Install gophernotes
+env GO111MODULE=on go get github.com/gopherdata/gophernotes
+mkdir -p ~/.local/share/jupyter/kernels/gophernotes
+cd ~/.local/share/jupyter/kernels/gophernotes
+cp "$(go env GOPATH)"/pkg/mod/github.com/gopherdata/gophernotes@v0.7.3/kernel/*  "."
+chmod +w ./kernel.json # in case copied kernel.json has no write permission
+sed "s|gophernotes|$(go env GOPATH)/bin/gophernotes|" < kernel.json.in > kernel.json

@@ -1,0 +1,9 @@
+name: goenv
+channels:
+  - damianavila82
+  - conda-forge
+dependencies:
+  - jupyter
+  - jupyterlab
+  - rise
+
