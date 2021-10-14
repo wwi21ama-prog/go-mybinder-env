@@ -3,7 +3,6 @@
 # Setup environment
 BASEPATH=$PWD
 TOOLSPATH=$BASEPATH/.tools
-WORKSPACE=$BASEPATH/workspace
 
 mkdir -p $TOOLSPATH
 
