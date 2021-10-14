@@ -2,7 +2,7 @@
 
 # Setup environment
 BASEPATH=$PWD
-TOOLSPATH=$BASEPATH/.tools
+TOOLSPATH=$BASEPATH/tools
 
 mkdir -p $TOOLSPATH
 
@@ -23,7 +23,7 @@ ENVVARSFILE=.bashrc
 echo "export PATH=$GOBIN:$TOOLSPATH/go/bin:$PATH" >> $ENVVARSFILE
 
 # Install gophernotes
-env GO111MODULE=on go get github.com/gopherdata/gophernotes
+env GO111MODULE=on go install github.com/gopherdata/gophernotes@latest
 mkdir -p ~/.local/share/jupyter/kernels/gophernotes
 cd ~/.local/share/jupyter/kernels/gophernotes
 cp "$(go env GOPATH)"/pkg/mod/github.com/gopherdata/gophernotes@v0.7.3/kernel/*  "."
